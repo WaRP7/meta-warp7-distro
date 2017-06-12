@@ -1,0 +1,60 @@
+From 7aa25c6d89827440d5ce85dcaa06119aa25eff37 Mon Sep 17 00:00:00 2001
+From: Pierre-Jean TEXIER <texier.pj2@gmail.com>
+Date: Mon, 12 Jun 2017 13:59:41 +0200
+Subject: [PATCH 1/2] Doc: DT: Add binding document for GPIO exporter
+
+Signed-off-by: Pierre-Jean TEXIER <texier.pj2@gmail.com>
+---
+ .../devicetree/bindings/gpio/gpio-exporter.txt     | 40 ++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/gpio/gpio-exporter.txt
+
+diff --git a/Documentation/devicetree/bindings/gpio/gpio-exporter.txt b/Documentation/devicetree/bindings/gpio/gpio-exporter.txt
+new file mode 100644
+index 0000000..58fc2a9
+--- /dev/null
++++ b/Documentation/devicetree/bindings/gpio/gpio-exporter.txt
+@@ -0,0 +1,40 @@
++Bindings to export some GPIOs to userspace.
++
++This is useful when some signals are made externally available by a piece
++of hardware (eg terminal blocks to connect sensors, actuators) but no
++special purpose kernel driver exists.
++
++Use of this binding allows userspace to have a stable name and input
++/ output mode across hardware and software versions.
++
++Required properties:
++- compatible: "linux,gpio-exporter"
++
++
++Each GPIO to be exported is represented as a child node with:
++
++Required child properties:
++- gpios : Reference to the GPIO to export (standard gpio binding)
++
++Optional child properties:
++- output : if present GPIO is output, otherwise input
++- initial-state : Initial state (0=low, 1=high) for output
++- allow-direction-change : Present if GPIO direction may be modified
++
++The name of the child node is that exposed to userspace.
++
++Example:
++	gpio_exporter:gpio-exporter {
++		compatible = "linux,gpio-exporter";
++
++		terminalblock_1_out1 {
++			gpios = <&gpio2 12 0>;
++			output;
++			initial-state = <0>;
++		};
++
++		terminalblock_1_in1 {
++			gpios = <&gpio2 15 0>;
++		};
++
++	};
+-- 
+1.9.1
+
