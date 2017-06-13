@@ -1,0 +1,236 @@
+From fcc51eec9537a8226cd69113cce75e3975bfd938 Mon Sep 17 00:00:00 2001
+From: Pierre-Jean TEXIER <texier.pj2@gmail.com>
+Date: Mon, 12 Jun 2017 14:02:29 +0200
+Subject: [PATCH 2/2] gpio: add driver to export DT configured GPIOs to
+ userspace
+
+Signed-off-by: Pierre-Jean TEXIER <texier.pj2@gmail.com>
+---
+ drivers/gpio/Kconfig         |   9 +++
+ drivers/gpio/Makefile        |   1 +
+ drivers/gpio/gpio-exporter.c | 181 +++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 191 insertions(+)
+ create mode 100644 drivers/gpio/gpio-exporter.c
+
+diff --git a/drivers/gpio/Kconfig b/drivers/gpio/Kconfig
+index c88b01b..1224de7 100644
+--- a/drivers/gpio/Kconfig
++++ b/drivers/gpio/Kconfig
+@@ -94,6 +94,15 @@ config GPIO_GENERIC
+ # This symbol is selected by both I2C and SPI expanders
+ config GPIO_MAX730X
+ 	tristate
++	
++config GPIO_EXPORTER
++	tristate "Userspace exporter driver"
++	depends on OF_GPIO && GPIO_SYSFS
++	help
++	  This enables a GPIO consumer which exports some GPIOs to userspace.
++	  The GPIOs to be exported are defined in the device tree.
++	  The exported GPIOs are represented as symbolic links in sysfs,
++	  relieving usespace of the burden of knowing the GPIO number to export
+ 
+ menu "Memory mapped GPIO drivers"
+ 
+diff --git a/drivers/gpio/Makefile b/drivers/gpio/Makefile
+index f71bb97..aa4a44e 100644
+--- a/drivers/gpio/Makefile
++++ b/drivers/gpio/Makefile
+@@ -10,6 +10,7 @@ obj-$(CONFIG_GPIO_SYSFS)	+= gpiolib-sysfs.o
+ obj-$(CONFIG_GPIO_ACPI)		+= gpiolib-acpi.o
+ 
+ # Device drivers. Generally keep list sorted alphabetically
++obj-$(CONFIG_GPIO_EXPORTER)	+= gpio-exporter.o
+ obj-$(CONFIG_GPIO_GENERIC)	+= gpio-generic.o
+ 
+ obj-$(CONFIG_GPIO_74X164)	+= gpio-74x164.o
+diff --git a/drivers/gpio/gpio-exporter.c b/drivers/gpio/gpio-exporter.c
+new file mode 100644
+index 0000000..ac9f27b
+--- /dev/null
++++ b/drivers/gpio/gpio-exporter.c
+@@ -0,0 +1,181 @@
++/*
++ * A driver that allows some gpios to be exported to userspace
++ * using friendly names.
++ *
++ * This allows the gpios to be exported to be configured in the device tree
++ * and frees userspace from having to know unstable gpio numbers.
++ *
++ * Copyright 2015 Parkeon
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public License as
++ * published by the Free Software Foundation; either version 2 of the
++ * License, or (at your option) any later version.
++ *
++ */
++
++#include <linux/device.h>
++#include <linux/err.h>
++#include <linux/gpio.h>
++#include <linux/module.h>
++#include <linux/of.h>
++#include <linux/of_gpio.h>
++#include <linux/of_device.h>
++#include <linux/platform_device.h>
++
++struct gpio_exporter_gpio {
++	const char *name;
++	int gpio;
++	bool active_low;
++};
++
++struct gpio_exporter_data {
++	struct device *dev;
++	int num_gpios;
++	struct gpio_exporter_gpio *gpios;
++};
++
++static int gpio_exporter_do_one(struct gpio_exporter_data *data,
++				struct device_node *np)
++{
++	const char *name = np->name;
++	u32 flags;
++	int gpio, active_low;
++	int ret;
++
++	gpio = of_get_gpio_flags(np, 0, &flags);
++	if (gpio < 0) {
++		ret = gpio;
++		goto failed_get;
++	}
++
++	active_low = flags & OF_GPIO_ACTIVE_LOW;
++
++	ret = gpio_request(gpio, name);
++	if (ret)
++		goto failed_get;
++
++	if (of_property_read_bool(np, "output")) {
++		u32 state = 0;
++
++		of_property_read_u32(np, "initial-state", &state);
++		ret = gpio_direction_output(gpio, active_low ? !state : state);
++	} else {
++		ret = gpio_direction_input(gpio);
++	}
++	if (ret)
++		goto failed_setdir;
++
++	ret = gpio_export(gpio,
++			  of_property_read_bool(np, "allow-direction-change"));
++	if (ret)
++		goto failed_export;
++
++	ret = gpio_export_link(data->dev, name, gpio);
++	if (ret)
++		goto failed_link;
++
++	data->gpios[data->num_gpios].name = name;
++	data->gpios[data->num_gpios].gpio = gpio;
++	data->gpios[data->num_gpios].active_low = active_low;
++	data->num_gpios++;
++
++	dev_info(data->dev,
++		"Exported gpio%d as '%s'\n", gpio, name);
++
++	return 0;
++
++failed_link:
++	gpio_unexport(gpio);
++
++failed_export:
++failed_setdir:
++failed_get:
++	dev_err(data->dev, "Failed to export gpio '%s': %d\n", name, ret);
++
++	return ret;
++}
++
++static void gpio_exporter_cleanup(struct gpio_exporter_data *data)
++{
++	int i;
++
++	for (i = 0; i < data->num_gpios; i++) {
++		sysfs_remove_link(&data->dev->kobj, data->gpios[i].name);
++		gpio_unexport(data->gpios[i].gpio);
++	}
++}
++
++static int gpio_exporter_probe(struct platform_device *pdev)
++{
++	struct device *dev = &pdev->dev;
++	struct device_node *np = dev->of_node;
++	struct device_node *child;
++	struct gpio_exporter_data *data;
++	int num_gpios = 0;
++	int ret;
++
++	if (!dev->of_node)
++		return -ENODEV;
++
++	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
++	if (!data)
++		return -ENOMEM;
++
++	data->dev = dev;
++	dev_set_drvdata(dev, data);
++
++	for_each_available_child_of_node(np, child)
++		num_gpios++;
++
++	data->gpios = devm_kzalloc(dev, num_gpios * sizeof(*data->gpios),
++					GFP_KERNEL);
++	if (!data->gpios)
++		return -ENOMEM;
++
++	for_each_available_child_of_node(np, child) {
++		ret = gpio_exporter_do_one(data, child);
++		if (ret)
++			goto out_cleanup;
++	}
++
++	dev_info(dev, "exported %d gpios\n", data->num_gpios);
++
++	return 0;
++
++out_cleanup:
++	gpio_exporter_cleanup(data);
++
++	return ret;
++}
++
++static int gpio_exporter_remove(struct platform_device *pdev)
++{
++	struct gpio_exporter_data *data = platform_get_drvdata(pdev);
++
++	gpio_exporter_cleanup(data);
++
++	return 0;
++}
++
++static const struct of_device_id gpio_exporter_dt_ids[] = {
++	 { .compatible = "linux,gpio-exporter", },
++	 { /* sentinel */ }
++};
++MODULE_DEVICE_TABLE(of, gpio_exporter_dt_ids);
++
++static struct platform_driver gpio_exporter_driver = {
++	.driver	= {
++		.name	= "gpio-exporter",
++		.of_match_table	= gpio_exporter_dt_ids,
++	},
++	.probe	= gpio_exporter_probe,
++	.remove = gpio_exporter_remove,
++};
++
++module_platform_driver(gpio_exporter_driver);
++
++MODULE_LICENSE("GPL v2");
++MODULE_AUTHOR("Martin Fuzzey <mfuzzey@parkeon.com>");
++MODULE_DESCRIPTION("Userspace GPIO exporter");
++MODULE_ALIAS("platform:gpio-exporter");
+-- 
+1.9.1
+
