@@ -10,4 +10,5 @@ RDEPENDS_${PN} = " \
     devmem2 \
     evtest \
     spitools \
+    modbus-rtu \
     "

@@ -1,0 +1,94 @@
+From 7fd180652b32ad808e3b6cee4d9e8aa81b04e972 Mon Sep 17 00:00:00 2001
+From: Pierre-Jean TEXIER <texier.pj2@gmail.com>
+Date: Sat, 8 Jul 2017 22:42:22 +0200
+Subject: [PATCH] Add imx7s-warp-modbus.dts (modbus example)
+
+Signed-off-by: Pierre-Jean TEXIER <texier.pj2@gmail.com>
+---
+ arch/arm/boot/dts/Makefile              |  3 +-
+ arch/arm/boot/dts/imx7s-warp-modbus.dts | 59 +++++++++++++++++++++++++++++++++
+ 2 files changed, 61 insertions(+), 1 deletion(-)
+ create mode 100644 arch/arm/boot/dts/imx7s-warp-modbus.dts
+
+diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+index 8c18e59..3ba024c 100644
+--- a/arch/arm/boot/dts/Makefile
++++ b/arch/arm/boot/dts/Makefile
+@@ -401,7 +401,8 @@ dtb-$(CONFIG_SOC_IMX7D) += \
+ 	imx7d-sdb-reva-qspi.dtb \
+ 	imx7d-sdb-reva-touch.dtb \
+ 	imx7d-sdb-reva-wm8960.dtb \
+-	imx7s-warp.dtb
++	imx7s-warp.dtb \
++	imx7s-warp-modbus.dtb \
+ dtb-$(CONFIG_SOC_LS1021A) += \
+ 	ls1021a-qds.dtb \
+ 	ls1021a-twr.dtb
+diff --git a/arch/arm/boot/dts/imx7s-warp-modbus.dts b/arch/arm/boot/dts/imx7s-warp-modbus.dts
+new file mode 100644
+index 0000000..e1a1e2a
+--- /dev/null
++++ b/arch/arm/boot/dts/imx7s-warp-modbus.dts
+@@ -0,0 +1,59 @@
++#include "imx7s-warp.dts"
++
++/ {	
++	gpio_exporter: gpio-exporter {
++		compatible = "linux,gpio-exporter";	
++		pinctrl-names = "default";
++		pinctrl-0 = <&pinctrl_gpioexporter_mikrobus>;
++		
++		out_RL2 {
++			gpios = <&gpio4 23 GPIO_ACTIVE_HIGH>;
++			output;
++			initial-state = <0>;
++		};
++				
++		in_INT_FLAME {
++			gpios = <&gpio7 7 GPIO_ACTIVE_HIGH>;
++		};
++	};
++};
++
++&i2c3 {
++	eeprom@50 {
++		compatible = "24c08", "atmel,24c08";
++		reg = <0x50>;
++		pagesize = <16>;
++	};	
++};
++
++&uart6 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_uart6>;
++	assigned-clocks = <&clks IMX7D_UART6_ROOT_SRC>;
++	assigned-clock-parents = <&clks IMX7D_PLL_SYS_MAIN_240M_CLK>;
++	fsl,dte-mode;
++	status = "okay";
++};
++
++
++&iomuxc {
++	pinctrl-names = "default";
++	imx7s-warp {
++	
++		pinctrl_uart6: uart6grp {
++			fsl,pins = <
++				MX7D_PAD_ECSPI1_MOSI__UART6_DTE_RX	0x79
++				MX7D_PAD_ECSPI1_SCLK__UART6_DTE_TX	0x79
++			>;
++		};
++		
++		pinctrl_gpioexporter_mikrobus: gpioexportergrp {
++			fsl,pins = <
++				MX7D_PAD_ECSPI2_SS0__GPIO4_IO23		0x14
++				MX7D_PAD_ENET1_RGMII_TD1__GPIO7_IO7	0x14 	
++			>;
++		};
++	};
++};
++
++
+-- 
+1.9.1
+
