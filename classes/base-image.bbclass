@@ -26,6 +26,9 @@ MIKROBUS_INSTALL = " \
 
 CONNECTIVITY_INSTALL = " \
 	dnsmasq \
+	wpa-supplicant \
+	wpa-supplicant-passphrase \
+	iw \
     	hostapd \
     	bluez5 \
     	mosquitto \
@@ -40,6 +43,8 @@ CORE_OS_INSTALL = " \
     	kernel-devicetree \
     	kernel-image \
     	kernel-modules \    	
+    	swupdate \
+    	swupdate-www \
 "
 
 IMAGE_INSTALL += " \
