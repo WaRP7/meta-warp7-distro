@@ -1,7 +1,7 @@
-From 7aa25c6d89827440d5ce85dcaa06119aa25eff37 Mon Sep 17 00:00:00 2001
+From 8a005a39e14b634bfdc4f951f64420a01d07bef7 Mon Sep 17 00:00:00 2001
 From: Pierre-Jean TEXIER <texier.pj2@gmail.com>
-Date: Mon, 12 Jun 2017 13:59:41 +0200
-Subject: [PATCH 1/2] Doc: DT: Add binding document for GPIO exporter
+Date: Mon, 14 Aug 2017 21:20:31 +0200
+Subject: [PATCH 1/5] Doc: DT: Add binding document for GPIO exporter
 
 Signed-off-by: Pierre-Jean TEXIER <texier.pj2@gmail.com>
 ---

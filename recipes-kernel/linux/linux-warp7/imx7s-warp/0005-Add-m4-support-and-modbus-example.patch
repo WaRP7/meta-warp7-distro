@@ -1,0 +1,28 @@
+From 0be9b6d2dc49fbc15ae65c47e55854eecaa1dc37 Mon Sep 17 00:00:00 2001
+From: Pierre-Jean TEXIER <texier.pj2@gmail.com>
+Date: Mon, 14 Aug 2017 21:22:52 +0200
+Subject: [PATCH 5/5] Add m4 support and modbus example
+
+Signed-off-by: Pierre-Jean TEXIER <texier.pj2@gmail.com>
+---
+ arch/arm/boot/dts/Makefile | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+index 8c18e59..0d299f0 100644
+--- a/arch/arm/boot/dts/Makefile
++++ b/arch/arm/boot/dts/Makefile
+@@ -401,7 +401,9 @@ dtb-$(CONFIG_SOC_IMX7D) += \
+ 	imx7d-sdb-reva-qspi.dtb \
+ 	imx7d-sdb-reva-touch.dtb \
+ 	imx7d-sdb-reva-wm8960.dtb \
+-	imx7s-warp.dtb
++	imx7s-warp.dtb \
++	imx7s-warp-modbus.dtb \
++	imx7s-warp-m4.dtb \
+ dtb-$(CONFIG_SOC_LS1021A) += \
+ 	ls1021a-qds.dtb \
+ 	ls1021a-twr.dtb
+-- 
+1.9.1
+

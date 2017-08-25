@@ -1,0 +1,41 @@
+From 6cb41eba0996f05e7fa06b8e834516043145b96b Mon Sep 17 00:00:00 2001
+From: Vanessa Maegima <vanessa.maegima@nxp.com>
+Date: Wed, 23 Nov 2016 10:25:37 -0200
+Subject: [PATCH 1/2] ARM: imx: Add imx7s-warp RPMsg support
+
+The RPMsg driver is hardcoded to support imx7d-sdb.
+
+Add support for imx7s-warp.
+
+Signed-off-by: Vanessa Maegima <vanessa.maegima@nxp.com>
+---
+ arch/arm/mach-imx/imx_rpmsg.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/arch/arm/mach-imx/imx_rpmsg.c b/arch/arm/mach-imx/imx_rpmsg.c
+index 6e3aed1..4af740a 100644
+--- a/arch/arm/mach-imx/imx_rpmsg.c
++++ b/arch/arm/mach-imx/imx_rpmsg.c
+@@ -273,6 +273,7 @@ static struct imx_rpmsg_vproc imx_rpmsg_vprocs[] = {
+ static const struct of_device_id imx_rpmsg_dt_ids[] = {
+	{ .compatible = "fsl,imx6sx-rpmsg", },
+	{ .compatible = "fsl,imx7d-rpmsg", },
++	{ .compatible = "fsl,imx7s-rpmsg", },
+	{ /* sentinel */ }
+ };
+ MODULE_DEVICE_TABLE(of, imx_rpmsg_dt_ids);
+@@ -293,6 +294,12 @@ static int imx_rpmsg_probe(struct platform_device *pdev)
+				rpdev->vring[0] = 0xBFFF0000;
+				rpdev->vring[1] = 0xBFFF8000;
+			}
++			ret = of_device_is_compatible(np, "fsl,imx7s-rpmsg");
++			if (ret) {
++				/* hardcodes here now. */
++				rpdev->vring[0] = 0x9FFF0000;
++				rpdev->vring[1] = 0x9FFF8000;
++			}
+		} else {
+			break;
+		}
+--
+2.7.4
