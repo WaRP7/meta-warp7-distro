@@ -22,7 +22,7 @@ $: PATH=${PATH}:~/bin
 $: mkdir warp7_bsp
 $: cd warp7_bsp
 $: repo init -u https://github.com/Freescale/fsl-community-bsp-platform -b master
-$ repo sync
+$:  repo sync
 ```
 
 At the end of the commands you have every metadata you need to start work with.
@@ -34,6 +34,7 @@ $: cd sources
 $: git clone -b master https://github.com/WaRP7/meta-warp7-distro.git
 $: git clone -b master https://github.com/meta-qt5/meta-qt5.git
 $: git clone -b master https://github.com/sbabic/meta-swupdate.git
+$: cd ../
 $: MACHINE=imx7s-warp DISTRO=warp7 source setup-environment warp7-build/ 
 ... 
 You can now run 'bitbake <target>' 
@@ -55,7 +56,7 @@ Your build environment has been configured with:
 ``` 
 Add layers to bblayers.conf
 
-```  
+```
 $: bitbake-layers add-layer ../sources/meta-qt5/ 
 $: bitbake-layers add-layer ../sources/meta-warp7-distro/
 $: bitbake-layers add-layer ../sources/meta-swupdate/ 
@@ -63,7 +64,7 @@ $: bitbake-layers add-layer ../sources/meta-openembedded/meta-python/
 $: bitbake-layers add-layer ../sources/meta-openembedded/meta-networking/
 ```
 Finally
-```  
+```
 $: bitbake qt5-image
 ```
 
