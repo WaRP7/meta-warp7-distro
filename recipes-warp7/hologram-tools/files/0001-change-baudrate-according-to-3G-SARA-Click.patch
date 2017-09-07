@@ -1,0 +1,26 @@
+From 7141449ed501e41d9fd5460da463fd8d1a63c931 Mon Sep 17 00:00:00 2001
+From: Pierre-Jean TEXIER <texier.pj2@gmail.com>
+Date: Thu, 31 Aug 2017 20:47:43 +0200
+Subject: [PATCH] change baudrate according to 3G SARA Click
+
+Signed-off-by: Pierre-Jean TEXIER <texier.pj2@gmail.com>
+---
+ ppp/peers/iota | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/ppp/peers/iota b/ppp/peers/iota
+index 571cf92..2c2bc2d 100644
+--- a/ppp/peers/iota
++++ b/ppp/peers/iota
+@@ -7,7 +7,7 @@ connect "/usr/sbin/chat -v -f /etc/chatscripts/iota "
+ /dev/ttyACM0
+ 
+ # Speed of the serial line.
+-9600
++115200
+ 
+ # Assumes that your IP address is allocated dynamically by the ISP.
+ noipdefault
+-- 
+1.9.1
+

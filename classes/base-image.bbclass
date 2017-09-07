@@ -35,6 +35,8 @@ CONNECTIVITY_INSTALL = " \
     	mosquitto-clients \
     	libmosquitto1 \
     	libmosquittopp1 \
+    	ppp \
+    	hologram-tools \
 "
 
 CORE_OS_INSTALL = " \
