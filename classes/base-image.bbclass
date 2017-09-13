@@ -40,6 +40,7 @@ CONNECTIVITY_INSTALL = " \
 "
 
 CORE_OS_INSTALL = " \
+	hwrevision \
     	dbus \   	
     	sysfsutils \ 	
     	kernel-devicetree \
