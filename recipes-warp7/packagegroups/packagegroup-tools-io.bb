@@ -6,10 +6,10 @@ inherit packagegroup
 
 RDEPENDS_${PN} = " \
 	i2c-tools \
-    	iotop \
     	devmem2 \
     	evtest \
     	spitools \
     	modbus-rtu \
 	service-mpl3115 \
+	rpmsg-tools \
     "
