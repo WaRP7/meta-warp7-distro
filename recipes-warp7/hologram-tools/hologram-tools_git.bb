@@ -7,7 +7,7 @@ SRC_URI = " \
 	file://0001-change-baudrate-according-to-3G-SARA-Click.patch \
 "
 
-SRCREV = "${AUTOREV}"
+SRCREV = "8593eabcffd1ed629dcf74ca7149460048f7d48d"
 S = "${WORKDIR}/git"
 
 do_configure[noexec] = "1"
