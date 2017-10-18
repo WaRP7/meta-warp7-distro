@@ -43,11 +43,10 @@ CORE_OS_INSTALL = " \
 	hwrevision \
     	dbus \   	
     	sysfsutils \ 	
-    	kernel-devicetree \
-    	kernel-image \
     	kernel-modules \    	
     	swupdate \
     	swupdate-www \
+    	swupdate-tools \
 "
 
 IMAGE_INSTALL += " \
@@ -62,8 +61,6 @@ IMAGE_INSTALL += " \
 	packagegroup-tools-io \
     	${CORE_IMAGE_EXTRA_INSTALL} \
 "
-
-PACKAGE_EXCLUDE = "packagegroup-base-extended"
 
 export IMAGE_BASENAME = "base-image"
 
