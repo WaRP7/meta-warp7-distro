@@ -8,9 +8,3 @@ SRC_URI_append_imx7s-warp += " \
 	file://0005-Add-m4-support-and-modbus-example.patch \
 	file://ARM-imx-Add-imx7s-warp-RPMsg-support.patch \
 	"
-	
-KERNEL_DEVICETREE = " \
-		imx7s-warp.dtb \
-		imx7s-warp-modbus.dtb \
-		imx7s-warp-m4.dtb \
-		"	

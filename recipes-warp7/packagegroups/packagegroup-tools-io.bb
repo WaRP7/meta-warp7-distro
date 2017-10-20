@@ -5,10 +5,11 @@ LIC_FILES_CHKSUM = "file://${COREBASE}/meta/COPYING.MIT;md5=3da9cfbcb788c80a0384
 inherit packagegroup
 
 RDEPENDS_${PN} = " \
-    i2c-tools \
-    iotop \
-    devmem2 \
-    evtest \
-    spitools \
-    modbus-rtu \
+	i2c-tools \
+    	devmem2 \
+    	evtest \
+    	spitools \
+    	modbus-rtu \
+	service-mpl3115 \
+	rpmsg-tools \
     "
