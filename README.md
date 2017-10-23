@@ -21,7 +21,7 @@ $: chmod a+x ~/bin/repo
 $: PATH=${PATH}:~/bin
 $: mkdir warp7_bsp
 $: cd warp7_bsp
-$: repo init -u https://github.com/Freescale/fsl-community-bsp-platform -b master
+$: repo init -u https://github.com/Freescale/fsl-community-bsp-platform -b pyro
 $:  repo sync
 ```
 
@@ -31,9 +31,9 @@ To start a simple image build :
 
 ```
 $: cd sources
-$: git clone -b master https://github.com/WaRP7/meta-warp7-distro.git
-$: git clone -b master https://github.com/meta-qt5/meta-qt5.git
-$: git clone -b master https://github.com/sbabic/meta-swupdate.git
+$: git clone -b pyro https://github.com/WaRP7/meta-warp7-distro.git
+$: git clone -b pyro https://github.com/meta-qt5/meta-qt5.git
+$: git clone -b pyro https://github.com/sbabic/meta-swupdate.git
 $: cd ../
 $: MACHINE=imx7s-warp DISTRO=warp7 source setup-environment warp7-build/ 
 ... 
