@@ -15,9 +15,11 @@ IMAGE_FEATURES += "package-management"
 # SSH 
 IMAGE_FEATURES += "ssh-server-dropbear"
 
-ALSA_INSTALL = " \
+AUDIO_INSTALL = " \
     	alsa-utils \
     	alsa-tools \
+    	shairport-sync \
+    	shairport-sync-metadata-reader \
 "
 
 MIKROBUS_INSTALL = " \
@@ -54,7 +56,7 @@ IMAGE_INSTALL += " \
 	openssh-sftp-server \
 	packagegroup-distro-base \
 	packagegroup-machine-base \
-	${ALSA_INSTALL} \
+	${AUDIO_INSTALL} \
 	${MIKROBUS_INSTALL} \
 	${CONNECTIVITY_INSTALL} \
 	packagegroup-iot-base \
