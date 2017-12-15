@@ -9,7 +9,5 @@ RDEPENDS_${PN} = " \
     	devmem2 \
     	evtest \
     	spitools \
-    	modbus-rtu \
-	service-mpl3115 \
 	rpmsg-tools \
     "
