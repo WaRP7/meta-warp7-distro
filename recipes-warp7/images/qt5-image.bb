@@ -1,7 +1,7 @@
 DESCRIPTION = "Qt image"
 LICENSE = "MIT"
 
-inherit base-image
+inherit base-image populate_sdk_qt5
 
 IMAGE_INSTALL += "\
 	packagegroup-qt5 \
