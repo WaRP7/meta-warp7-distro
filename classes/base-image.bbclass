@@ -15,6 +15,9 @@ IMAGE_FEATURES += "package-management"
 # SSH 
 IMAGE_FEATURES += "ssh-server-dropbear"
 
+# SPLASH SCREEN
+IMAGE_FEATURES += "splash"
+
 AUDIO_INSTALL = " \
     	alsa-utils \
     	alsa-tools \
