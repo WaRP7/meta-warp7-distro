@@ -7,4 +7,5 @@ SRC_URI_append_imx7s-warp += " \
 	file://0004-Add-m4-support.patch \
 	file://0005-Add-m4-support-and-modbus-example.patch \
 	file://ARM-imx-Add-imx7s-warp-RPMsg-support.patch \
+	file://0001-WIP-add-LCD.patch \
 	"
