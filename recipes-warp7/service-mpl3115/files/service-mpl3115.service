@@ -1,0 +1,8 @@
+[Unit]
+Description=ServiceMPL3115 daemon service
+
+[Service]
+ExecStart=/usr/bin/ServiceMPL3115
+
+[Install]
+WantedBy=multi-user.target

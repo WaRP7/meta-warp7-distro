@@ -1,0 +1,8 @@
+[Unit]
+Description=ServiceGateway daemon service
+
+[Service]
+ExecStart=/usr/bin/ServiceGateway
+
+[Install]
+WantedBy=multi-user.target
