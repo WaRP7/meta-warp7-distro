@@ -4,6 +4,7 @@ LICENSE = "MIT"
 inherit base-image populate_sdk_qt5
 
 IMAGE_INSTALL += "\
+	qt5-environment \
 	packagegroup-qt5 \
 	fontconfig \
 	fontconfig-utils \
