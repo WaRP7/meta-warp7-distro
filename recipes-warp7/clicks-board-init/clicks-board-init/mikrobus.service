@@ -1,0 +1,8 @@
+[Unit]
+Description=Click Board init daemon service
+
+[Service]
+ExecStart=/usr/bin/init-mikrobus.sh
+
+[Install]
+WantedBy=multi-user.target
