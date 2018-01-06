@@ -7,7 +7,7 @@ EXTRA_USERS_PARAMS = " \
     usermod -P iot root; \
     "
 
-inherit core-image
+inherit core-image image-buildinfo
 
 # Package
 IMAGE_FEATURES += "package-management"
@@ -65,3 +65,23 @@ IMAGE_INSTALL += " \
 "
 
 export IMAGE_BASENAME = "base-image"
+
+IMAGE_BUILDINFO_VARS = " \
+    BB_VERSION \
+    BUILD_SYS  \
+    NATIVELSBSTRING \
+    TARGET_SYS \
+    MACHINE \
+    DISTRO \
+    DISTRO_VERSION \
+    TUNE_FEATURES \
+    TARGET_FPU \
+"
+
+buildinfo () {
+cat > ${IMAGE_ROOTFS}${sysconfdir}/build-info << END
+Build Configuration:
+${@buildinfo_target(d)}
+${@get_layer_revs(d)}
+END
+}
