@@ -31,8 +31,6 @@ MIKROBUS_INSTALL = " \
 
 CONNECTIVITY_INSTALL = " \
     dnsmasq \
-    wpa-supplicant \
-    wpa-supplicant-passphrase \
     iw \
     hostapd \
     bluez5 \
@@ -40,7 +38,6 @@ CONNECTIVITY_INSTALL = " \
     mosquitto-clients \
     libmosquitto1 \
     libmosquittopp1 \
-    ppp \
     hologram-tools \
     networkmanager \
     modemmanager \
@@ -48,7 +45,6 @@ CONNECTIVITY_INSTALL = " \
 
 CORE_OS_INSTALL = " \
 	hwrevision \
-    dbus \
     sysfsutils \
     kernel-modules \
     swupdate \
