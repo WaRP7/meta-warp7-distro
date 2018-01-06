@@ -62,7 +62,6 @@ IMAGE_INSTALL += " \
     ${CONNECTIVITY_INSTALL} \
     packagegroup-iot-base \
     packagegroup-tools-io \
-    ${CORE_IMAGE_EXTRA_INSTALL} \
 "
 
 export IMAGE_BASENAME = "base-image"
