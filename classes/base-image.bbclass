@@ -42,6 +42,8 @@ CONNECTIVITY_INSTALL = " \
     	libmosquittopp1 \
     	ppp \
     	hologram-tools \
+    networkmanager \
+    modemmanager \
 "
 
 CORE_OS_INSTALL = " \
