@@ -30,4 +30,8 @@ kernel_do_configure_prepend() {
     kernel_conf_variable SECCOMP y
     kernel_conf_variable NET_NS y
     kernel_conf_variable DEVPTS_MULTIPLE_INSTANCES y
+
+    #IIO interrupt and sysfs triggers
+    kernel_conf_variable IIO_INTERRUPT_TRIGGER y
+    kernel_conf_variable IIO_SYSFS_TRIGGER y
 }
