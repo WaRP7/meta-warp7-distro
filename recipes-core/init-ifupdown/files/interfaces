@@ -5,9 +5,10 @@ auto lo
 iface lo inet loopback
 
 # Wireless interfaces
-auto wlan0
-iface wlan0 inet static
-	address 10.0.0.1
-	netmask 255.0.0.0
-	network 10.0.0.0
-	broadcast 10.255.255.255
+# Uncommenting lines below will configure and prevent NM from accessing this device
+#auto wlan0
+#iface wlan0 inet static
+#	address 10.0.0.1
+#	netmask 255.0.0.0
+#	network 10.0.0.0
+#	broadcast 10.255.255.255
