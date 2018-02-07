@@ -1,0 +1,10 @@
+[Unit]
+Description=Configure Bluetooth Modems connected by UART
+Before=bluetooth.service
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/hciattach ttymxc2 bcm43xx 3000000 flow -t 20
+
+[Install]
+WantedBy=multi-user.target
