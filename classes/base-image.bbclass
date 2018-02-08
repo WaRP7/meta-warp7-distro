@@ -44,9 +44,11 @@ CONNECTIVITY_INSTALL = " \
 "
 
 CORE_OS_INSTALL = " \
-	hwrevision \
+    hwrevision \
     sysfsutils \
+    kernel-image \
     kernel-modules \
+    kernel-devicetree \
     swupdate \
     swupdate-www \
     swupdate-tools \
