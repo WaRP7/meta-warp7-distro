@@ -39,7 +39,6 @@ CONNECTIVITY_INSTALL = " \
     libmosquitto1 \
     libmosquittopp1 \
     hologram-tools \
-    networkmanager \
     modemmanager \
 "
 
