@@ -1,0 +1,43 @@
+From a3731d55ddda88601735b657d4a6cfc2f34534d5 Mon Sep 17 00:00:00 2001
+From: Pierre-Jean TEXIER <texier.pj2@gmail.com>
+Date: Thu, 8 Feb 2018 20:37:42 +0100
+Subject: [PATCH 2/2] warp7: update location (zImage, dtb)
+
+With mender.io. zImage, and any device tree binary should be stored in directory /boot.
+
+Signed-off-by: Pierre-Jean TEXIER <texier.pj2@gmail.com>
+---
+ include/configs/warp7.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/include/configs/warp7.h b/include/configs/warp7.h
+index 77ebc15..daa201c 100644
+--- a/include/configs/warp7.h
++++ b/include/configs/warp7.h
+@@ -22,7 +22,7 @@
+ #define CONFIG_SYS_FSL_ESDHC_ADDR       USDHC3_BASE_ADDR
+ #define CONFIG_SUPPORT_EMMC_BOOT
+ #define CONFIG_SYS_FSL_ESDHC_HAS_DDR_MODE
+-#define CONFIG_SYS_MMC_IMG_LOAD_PART	1
++#define CONFIG_SYS_MMC_IMG_LOAD_PART	2
+ 
+ #define CONFIG_DFU_ENV_SETTINGS \
+ 	"dfu_alt_info=boot raw 0x2 0x400 mmcpart 1\0" \
+@@ -30,12 +30,12 @@
+ #define CONFIG_EXTRA_ENV_SETTINGS \
+ 	CONFIG_DFU_ENV_SETTINGS \
+ 	"script=boot.scr\0" \
+-	"image=zImage\0" \
++	"image=/boot/zImage\0" \
+ 	"console=ttymxc0\0" \
+ 	"ethact=usb_ether\0" \
+ 	"fdt_high=0xffffffff\0" \
+ 	"initrd_high=0xffffffff\0" \
+-	"fdt_file=imx7s-warp.dtb\0" \
++	"fdt_file=/boot/imx7s-warp.dtb\0" \
+ 	"fdt_addr=0x83000000\0" \
+ 	"boot_fdt=try\0" \
+ 	"ip_dyn=yes\0" \
+-- 
+2.7.4
+

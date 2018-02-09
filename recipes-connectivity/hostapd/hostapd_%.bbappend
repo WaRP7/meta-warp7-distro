@@ -12,3 +12,5 @@ SRC_URI_append = " \
 do_install_append() {
     install -m 0644 ${WORKDIR}/hostapd.conf ${D}${sysconfdir}
 }
+
+SYSTEMD_AUTO_ENABLE_${PN} = "disable"
