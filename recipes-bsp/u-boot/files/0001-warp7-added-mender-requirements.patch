@@ -1,0 +1,33 @@
+From 6d65f4aea98ba0addb8da3b4cc3a1bb30b41636f Mon Sep 17 00:00:00 2001
+From: Pierre-Jean TEXIER <texier.pj2@gmail.com>
+Date: Tue, 13 Feb 2018 20:24:06 +0100
+Subject: [PATCH 1/2] warp7 added mender requirements
+
+Signed-off-by: Pierre-Jean TEXIER <texier.pj2@gmail.com>
+---
+ include/configs/warp7.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/include/configs/warp7.h b/include/configs/warp7.h
+index 11f1bc3..eeaa988 100644
+--- a/include/configs/warp7.h
++++ b/include/configs/warp7.h
+@@ -113,11 +113,11 @@
+ /* environment organization */
+ #define CONFIG_ENV_SIZE			SZ_8K
+ 
+-#define CONFIG_ENV_OFFSET		(8 * SZ_64K)
+-#define CONFIG_SYS_FSL_USDHC_NUM	1
++/* Mender */
++#define CONFIG_BOOTCOUNT_ENV
++#define CONFIG_BOOTCOUNT_LIMIT
+ 
+-#define CONFIG_SYS_MMC_ENV_DEV		0
+-#define CONFIG_SYS_MMC_ENV_PART		0
++#define CONFIG_SYS_FSL_USDHC_NUM	1
+ 
+ /* USB Configs */
+ #define CONFIG_EHCI_HCD_INIT_AFTER_RESET
+-- 
+2.7.4
+

@@ -1,6 +1,5 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/patches:"
+require recipes-bsp/u-boot/u-boot-mender.inc
+require u-boot-mender-warp7.inc
 
-SRC_URI += "\
-	file://0001-warp7-update-defconfig-and-replace-fatload-command.patch \
-	file://0002-warp7-update-location-zImage-dtb.patch \					
-"
+RPROVIDES_${PN} += "u-boot"
+RDEPENDS_${PN}_append_imx7s-warp = " u-boot-scr"
