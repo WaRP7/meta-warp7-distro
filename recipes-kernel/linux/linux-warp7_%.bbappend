@@ -34,4 +34,7 @@ kernel_do_configure_prepend() {
     #IIO interrupt and sysfs triggers
     kernel_conf_variable IIO_INTERRUPT_TRIGGER y
     kernel_conf_variable IIO_SYSFS_TRIGGER y
+
+    #Namespaces support
+    kernel_conf_variable NAMESPACES	y
 }
