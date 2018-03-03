@@ -38,3 +38,7 @@ kernel_do_configure_prepend() {
     #Namespaces support
     kernel_conf_variable NAMESPACES	y
 }
+
+KERNEL_MODULE_AUTOLOAD += " \
+	${@bb.utils.contains('MACHINE_FEATURES', 'wifi', 'bcmdhd', '',d)} \
+"
