@@ -20,7 +20,7 @@ $: chmod a+x ~/bin/repo
 $: PATH=${PATH}:~/bin
 $: mkdir warp7_bsp
 $: cd warp7_bsp
-$: repo init -u https://github.com/texierp/yocto-warp7-bsp-repo -b master
+$: repo init -u https://github.com/texierp/yocto-warp7-bsp-repo -b rocko
 $: repo sync -j8
 ```
 
