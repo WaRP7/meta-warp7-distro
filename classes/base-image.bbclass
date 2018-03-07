@@ -29,6 +29,10 @@ MIKROBUS_INSTALL = " \
     clicks-board-init \
 "
 
+MENDER_INSTALL = " \
+    state-scripts \
+"
+
 CONNECTIVITY_INSTALL = " \
     dnsmasq \
     iw \
@@ -59,6 +63,7 @@ IMAGE_INSTALL += " \
     packagegroup-distro-base \
     packagegroup-machine-base \
     ${AUDIO_INSTALL} \
+    ${MENDER_INSTALL} \
     ${MIKROBUS_INSTALL} \
     ${CONNECTIVITY_INSTALL} \
     packagegroup-iot-base \
