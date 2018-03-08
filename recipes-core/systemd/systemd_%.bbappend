@@ -1,6 +1,6 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-PACKAGECONFIG_append = "networkd resolved"
+PACKAGECONFIG_append = " networkd resolved"
 
 SRC_URI += " \
 	file://warp7-wifi.network \

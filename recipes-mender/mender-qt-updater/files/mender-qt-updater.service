@@ -1,0 +1,12 @@
+[Unit]
+Description=Mender qt updater daemon service
+Before=mender.service
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+ExecStart=/usr/bin/ServiceQtUpdater
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
