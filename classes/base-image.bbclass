@@ -31,6 +31,7 @@ MIKROBUS_INSTALL = " \
 
 MENDER_INSTALL = " \
     state-scripts \
+    mender-qt-updater \
 "
 
 CONNECTIVITY_INSTALL = " \
