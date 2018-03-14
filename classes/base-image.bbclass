@@ -92,3 +92,5 @@ ${@buildinfo_target(d)}
 ${@get_layer_revs(d)}
 END
 }
+
+MENDER_DATA_PART_DIR_append = " ${DEPLOY_DIR_IMAGE}/user-data"
