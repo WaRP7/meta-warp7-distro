@@ -53,9 +53,6 @@ CORE_OS_INSTALL = " \
     kernel-image \
     kernel-modules \
     kernel-devicetree \
-    swupdate \
-    swupdate-www \
-    swupdate-tools \
 "
 
 IMAGE_INSTALL += " \
