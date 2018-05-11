@@ -7,8 +7,7 @@ SRC_URI_append = " \
 inherit systemd
 
 do_install_append() {
-	install -d ${D}${systemd_unitdir}/system
-	install -m 644 ${WORKDIR}/hciattach.service ${D}${systemd_unitdir}/system
+	install -Dm 644 ${WORKDIR}/hciattach.service ${D}${systemd_unitdir}/system/hciattach.service
 }
 
-SYSTEMD_SERVICE_${PN} = "hciattach.service"
+SYSTEMD_SERVICE_${PN}_append_imx7s-warp = " hciattach.service"
